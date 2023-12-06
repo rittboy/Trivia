@@ -73,5 +73,86 @@ while(randomTen.size < 10){
         randomTen.add(questions[randomObjectKey]);
     }
 }
+//returns the questions contained in the set into another variable for further use
+const randomQuestionsSet = randomTen.values();
 
+//if DOM's readyState is "complete", move all question sections out of view
+document.onreadystatechange= (e) =>{
+    if(document.readyState === 'complete'){
+        sections.forEach((section, index) =>{
+            section.style.transform = `translateX(${index * 100}%)`;
+        })
+    }
+}
 
+//handle valid and invalid state at the starting point of game
+const setStartGameInvalidState = () =>{
+    usernameInput.style.border = "2px solid rgb(211, 70, 70)";
+    validationMsg.style.display = "block";
+    startBtn.setAttribute('disabled', '');
+}
+
+const setStartGameValidState = () =>{
+    usernameInput.style.border = '2px solid black';
+    validationMsg.style.display = 'none';
+    startBtn.removeAttribute('disabled');
+}
+
+//checks to see if the username entered already exists or not
+const userExists = (username) =>{
+    if(gameUsers.has(username)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+//checks validity of usernameInput value
+const isValid = (usernameInputValue) =>{
+    if(!validator.isEmpty(usernameInputValue) && validator.isLength(usernameInputValue, { min: 5})){
+        return{
+            valid: true,
+            msg: null
+        }
+    }else{
+        if(validator.isEmpty(usernameInputValue)){
+            return{
+                valid: false,
+                msg: "required"
+            }
+        }else if(!validator.isLength(usernameInputValue, { min: 5})){
+            return{
+                valid: false,
+                msg: "Minimum 5 characters"
+            }
+        }else {
+            return{
+                valid: false,
+                msg: "Input invalid"
+            }
+        }
+    }
+}
+
+//sanitizes and validates input value from username field
+const checkusernameValidity = () => {
+    const sanitizedInput = DOMPurify.sanitize(usernameInput.value);
+    const trimmedInput = validator.trim(sanitizedInput);
+    const escapedInput = validator.escape(trimmedInput);
+
+    const validation = isValid(escapedInput);
+    const usernameNotTaken = userExists(escapedInput);
+
+    if(!validation.valid || usernameNotTaken){
+        setStartGameInvalidState();
+
+        if(usernameNotTaken){
+            validationMsg.innerHTML = "Username already in use";
+        }else{
+            validationMsg.innerHTML = validation.msg;
+        }
+    }else{
+        currentUser = escapedInput;
+        setStartGameValidState();
+    }
+}
