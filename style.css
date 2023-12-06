@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Vibur&family=Xanh+Mono:ital@0;1&family=Yellowtail&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --decorative-font: 'Vibur', cursive;
+    --accent-font: "Bebas Neue", sans-serif;
+    --primary-font: "Helvetica Neue", sans-serif;
+    --header-height: 16.25rem;
+    --error-color: rgb(211, 70, 70);
+    --text-shadow--light: #dacdd9;
+    --alt-text-shadow--light: #afdbee;
+    --text-shadow--dark: #CF61CB;
+    --alt-text-shadow--dark: #19A8E6;
+    --alt-text-shadow--darker: #12749e;
+    --violet-neon:     
+        /* Light glow */
+        0 0 7px var(--text-shadow--light),
+        0 0 10px var(--text-shadow--light),
+        0 0 21px var(--text-shadow--light),
+        /* Dark glow */
+        0 0 42px var(--text-shadow--dark),
+        0 0 82px var(--text-shadow--dark),
+        0 0 92px var(--text-shadow--dark),
+        0 0 102px var(--text-shadow--dark),
+        0 0 151px var(--text-shadow--dark);
+    --violet-neon-box: 
+        0 0 .2rem var(--text-shadow--light),
+        0 0 .2rem var(--text-shadow--light),
+        0 0 2rem var(--text-shadow--dark),
+        0 0 0.8rem var(--text-shadow--dark),
+        0 0 2.8rem var(--text-shadow--dark),
+        inset 0 0 1.3rem var(--text-shadow--dark);
+    --blue-neon:     
+        /* Light glow */
+        0 0 7px var(--alt-text-shadow--light),
+        0 0 10px var(--alt-text-shadow--light),
+        0 0 21px var(--alt-text-shadow--light),
+        /* Dark glow */
+        0 0 42px var(--alt-text-shadow--dark),
+        0 0 82px var(--alt-text-shadow--dark),
+        0 0 92px var(--alt-text-shadow--dark),
+        0 0 102px var(--alt-text-shadow--dark),
+        0 0 151px var(--alt-text-shadow--dark);
+    --blue-neon-box: 
+        0 0 .2rem #fff,
+        0 0 .2rem #fff,
+        0 0 2rem var(--alt-text-shadow--dark),
+        0 0 0.8rem var(--alt-text-shadow--dark),
+        0 0 2.8rem var(--alt-text-shadow--dark),
+        inset 0 0 1.3rem var(--alt-text-shadow--dark); 
+  }
+
+  *{
+    scrollbar-width: auto;
+    scrollbar-color: #19a8e6 #0b4660;
+  }
+
+  *::-webkit-scrollbar{
+    background-color: rgba(11, 70, 96, 1);
+    border-radius: 3px;
+  }
+
+  *::-webkit-scrollbar-track{
+    background: rgba(11, 70, 96, 0.3);
+    border-radius: 10px;
+  }
+
+  *::-webkit-scrollbar-thumb{
+    background-color: #19a8e6;
+    border-radius: 10px;
+    border: 4px solid #0b4660;
+  }
+
+
+  noscript > div{
+    display: grid;
+    width: 100%;
+    min-height: 100vh;
+    place-content: center;
+    color: #fff;
+    background-color: #000;
+    font-size: 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  body{
+    background-image: url('./assets/wall-2059909.png');
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  .header{
+    color: #fff;
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .header > h1{
+    padding: 1.5rem;
+    font-size: 6.5rem;
+    font-family: var(--decorative-font);
+    letter-spacing: 1rem;
+    text-shadow: var(--violet-neon);
+  }
+
+  .header > h2{
+    font-family: var(--accent-font);
+    font-size: 2.5rem;
+    letter-spacing: 1.5rem;
+    margin-top: -3rem;
+    margin-left: 1rem;
+    text-shadow: var(--blue-neon);
+  }
+
+  
