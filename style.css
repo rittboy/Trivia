@@ -123,4 +123,88 @@
     text-shadow: var(--blue-neon);
   }
 
-  
+  .mobile-subheading{
+    display: none;
+  }
+
+  .header > h3{
+    display: none;
+    font-family: var(--accent-font);
+    letter-spacing: 0.2rem;
+    text-align: right;
+    margin-right: 1.2rem;
+  }
+
+  .header #current-username{
+    color: var(--alt-text-shadow--dark);
+    font-size: 1.75rem;
+  }
+
+  .container{
+    display: flex;
+    width: min(100% - 2rem, 1200px);
+    min-height: calc(94.5vh - var(--header-height));
+    margin-inline: auto;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+    padding-top: 1.5rem;
+    border-radius: 5px;
+  }
+
+  .start{
+    overflow: hidden;
+    margin-top: 7rem;
+  }
+
+  .start, .question, .game-end{
+    display: grid;
+    place-content: center;
+    gap: 4rem;
+    width: 100%;
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    object-fit: cover;
+  }
+
+  .game-end{
+    color: #fff;
+  }
+
+  .game-end > .show-details{
+    margin-top: -2.5rem;
+  }
+
+  section:not(section[id="start"]){
+    opacity: 0;
+    top: 1.25rem;
+  }
+
+  #username-field small{
+    display: none;
+    color: var(--error-color);
+    letter-spacing: 0.2rem;
+    margin-left: 0.2rem;
+    font-size: 1.1rem;
+    font-variant: small-caps;
+    font-family: var(--accent-font);
+    font-weight: bold;
+  }
+
+  #username,
+  .start-btn,
+  .next-question,
+  .play-again{
+    padding-block: 1.5rem;
+    border-radius: 10px;
+  }
+
+.play-again{
+    margin-bottom: 3.5rem;
+}
+
+#username-label{
+    display: block;
+    
+}
