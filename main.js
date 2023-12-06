@@ -156,3 +156,49 @@ const checkusernameValidity = () => {
         setStartGameValidState();
     }
 }
+
+//toggles select indicator on any given answer button
+const toggleSelectIndicator = (e) =>{
+    userSelection = true;
+
+    if(e.target.id.includes("answer-selection")){
+        const childrenArray = Array.from(e.target.parentElement.children);
+        childrenArray.forEach((answerBtn) =>{
+            answerBtn.children[0].style.border = "2px solid #fff";
+            answerBtn.children[0].style.boxShadow = "none";
+        })
+
+        e.target.children[0].style.border = "none";
+        e.target.children[0].style["box-shadow"] = "var(--blue-neon-box)";
+
+        selectedAnswer = e.target.children[1].innerText;
+
+        if(userSelection){
+            e.target.parentElement.nextElementSibling.removeAttribute('disabled');
+        }
+    }else if(e.target.id.includes('-indicator') || e.target.id.includes('__text')){
+        const childrenArray = Array.from(e.target.parentElement.parentElement.children);
+        childrenArray.forEach((answerBtn) =>{
+            answerBtn.children[0].style.border = "2px solid #fff";
+            answerBtn.children[0].style.boxShadow = "none";
+        })
+
+        if(e.target.id.includes('-indicator')){
+            e.target.style.border = 'none';
+            e.target.style["box-shadow"] = "var(--blue-neon-box)";
+
+            selectedAnswer = e.target.nextElementSibling.innerText;
+        }else {
+            e.target.previousElementSibling.style.border = 'none';
+            e.target.previousElementSibling.style['box-shadow'] = 'var(--blue-neon-box)';
+
+            selectedAnswer = e.target.innerText;
+        }
+
+        if(userSelection){
+            e.target.parentElement.parentElement.nextElementSibling.removeAttribute('disabled');
+        }
+    }
+}
+
+//checks to see if chosen answer is correct, and will update users score
