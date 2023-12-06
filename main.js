@@ -202,3 +202,25 @@ const toggleSelectIndicator = (e) =>{
 }
 
 //checks to see if chosen answer is correct, and will update users score
+const checkAnswer = (question, userAnswer, correct) =>{
+    const results = currentUserDetaiedResults.entries().next().value;
+
+    if(results[1].length < 10){
+        if(userAnswer === correct){
+            results[1].push({
+                question,
+                selectedAnswer,
+                outcome: "Correct"
+            })
+
+            runningScore += 100;
+        } else{
+            results[1].push({
+                question,
+                selectedAnswer,
+                outcome: "Incorrect"
+            })
+        }
+    }
+}
+
