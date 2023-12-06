@@ -55,4 +55,23 @@ currentUserDetaiedResults.set("results", []);
 //creates a map of all user stats
 const usersStats = new Map();
 usersStats.set("stats", []);
+//adds usernames to gameUsers set and full objects into userStats Map
+for(const users of usersValuesArray){
+    gameUsers.add(user.username);
+    usersStats.entries().next().value[1].push(user);
+}
+//adds ten questions at random from the JSON file into the randomTen array
+while(randomTen.size < 10){
+    //returns random whole number less than the total amount of questions in JSON file
+    const randomIndex = Math.floor(Math.random() * questionsKeysArray.length);
+    //returns the reference to the question in the array according to the index number it received from random number pull above
+    const randomObjectKey = questionsKeysArray[randomIndex];
+    //if question already is inside the array, continue on, if not, add to the array.
+    if(randomTen.has(questions[randomObjectKey])){
+        continue;
+    }else{
+        randomTen.add(questions[randomObjectKey]);
+    }
+}
+
 
