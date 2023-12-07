@@ -6,19 +6,19 @@ const container = document.querySelector('.container');
 const usernameInput = document.getElementById('username');
 const validationMsg = document.getElementById('validation-msg');
 const startBtn = document.getElementById('start-btn');
-const nextBtns = document.getElementById('.next-question');
+const nextBtns = document.querySelectorAll('.next-question');
 const playAgainBtn = document.getElementById('play-again');
 const startSection = document.getElementById('start');
 const currentUserDisplay = document.getElementById('user-display');
 const questionGroups = document.querySelectorAll('.question');
 const endSection = document.getElementById('.question');
 const finalScoreSpan = document.querySelector('span[id="score"]');
-const answerButtons = docuemnt.querySelectorAll('.answer');
-const questionsInModal = docuemnt.querySelectorAll('.game-question');
-const userStatsItems = docuemnt.querySelectorAll('.user-stat');
+const answerButtons = document.querySelectorAll('.answer');
+const questionsInModal = document.querySelectorAll('.game-question');
+const userStatsItems = document.querySelectorAll('.user-stat');
 
 //create array of answer buttons
-const ansewrs = [...answerButtons];
+const answers = [...answerButtons];
 //create array from buttons which cause change in section
 const nextSectionTriggers = [startBtn, ...nextBtns];
 //create an array of all <section> elements
@@ -58,7 +58,7 @@ currentUserDetaiedResults.set("results", []);
 const usersStats = new Map();
 usersStats.set("stats", []);
 //adds usernames to gameUsers set and full objects into userStats Map
-for(const users of usersValuesArray){
+for(const user of usersValuesArray){
     gameUsers.add(user.username);
     usersStats.entries().next().value[1].push(user);
 }
