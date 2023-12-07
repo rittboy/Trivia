@@ -259,3 +259,70 @@ const gameEnd = () =>{
     })
 }
 
+//displays answer and question set from randomTen Set
+const loadQuestionAndAnswers = () =>{
+    if(nextQuestionNumber != lastSectionIndex){
+        currentQuestion = randomQuestionsSet.next().value;
+        correctAnswer = currentQuestion.correctAnswer;
+        sections[nextQuestionNumber].children[0].innerHTML = currentQuestion["question"];
+
+        const answerNodes = Array.from(sections[nextQuestionNumber].children[1].children);
+
+        answerNodes.forEach((node, index) => node.children[1].innerHTML = currentQuestion["answers"][index]);
+        setTimeout(() => {
+            container.style.background = "rgba(11, 70, 96, 0.75)";
+        }, 350);
+    }
+}
+
+//Allows for transferring to next section
+const goToNextSection = () =>{
+    sections.forEach((section, loopIndex) =>{
+        sectionOffset = loopIndex - displayedSectionIndex;
+        section.style.transform = `translateX(${sectionOffset + 100}%)`;
+        section.style.opacity = 1;
+    })
+}
+
+//callback function to move to next section element
+const nextSectionClickListener = (e) =>{
+    if(e.target.id === "start-btn"){
+        gameUsers.add(currentUser);
+        currentUserDisplay.children[0].innerHTML = currentUser;
+        currentUserDisplay.style.display = "block";
+    }
+
+    if(correctAnswer && selectedAnswer){
+        checkAnswer(currentQuestion["question"], selectedAnswer, correctAnswer);
+    }
+
+    if(displayedSectionIndex === lastSectionIndex - 1){
+        userSelection = false;
+        displayedSectionIndex++;
+        gameEnd();
+        goToNextSection();
+    }else{
+        loadQuestionAndAnswers();
+        userSelection = false;
+        displayedSectionIndex++;
+        nextQuestionNumber++;
+        goToNextSection();
+    }
+}
+
+//adds eventlistener to all section change buttons
+nextSectionTriggers.forEach((trigger) =>{
+    trigger.addEventListener('click', (e) => nextSectionClickListener(e));
+})
+
+//adds listeners to all answer buttons
+answers.forEach((answer) =>{
+    answer.addEventListener('click', (e) => toggleSelectIndicator(e));
+})
+
+//adds input and blur listeners to username input field
+usernameInput.addEventListener('input', checkusernameValidity);
+usernameInput.addEventListener('blur', checkusernameValidity);
+
+//adds listener to play again button
+playAgainBtn.addEventListener('click', () => window.location.reload());
