@@ -25,6 +25,8 @@ const nextSectionTriggers = [startBtn, ...nextBtns];
 const sections = [startSection, ...questionGroups, endSection];
 //create an array from all stats listed in modal
 const resultQuestions = [...questionsInModal];
+//array of all stats elements at the end of the game
+const resultsStats = [...userStatsItems];
 //creates array of all questions asked, and is used in randomTen variable
 const questionsKeysArray = Object.keys(questions);
 //creates array fropm users.json file
@@ -222,5 +224,38 @@ const checkAnswer = (question, userAnswer, correct) =>{
             })
         }
     }
+}
+
+
+
+//Logic for end of game
+const gameEnd = () =>{
+    const score = runningScore.toString();
+    const results = currentUserDetaiedResults.entries().next().value;
+    const stats = usersStats.entries().next().value;
+
+    finalScoreSpan.innerHTML = score;
+
+    stats[1].push({username: currentUser, score: runningScore});
+
+    const sortedStats = stats[1].sort((a,b) => (a.score < b.score) ? 1 : -1);
+
+    resultsStats.forEach((rs, index) =>{
+        rs.children[0].innerHTML = sortedStats[index].username;
+        rs.children[1].innerHTML = sortedStats[index].score.toString();
+    })
+
+    resultQuestions.forEach((rq, index) =>{
+        rq.children[1].style['font-family'] = "var(--accent-font)";
+        rq.children[0].children[0].innerHTML = results[1][index].question;
+        rq.children[0].children[1].children[0].innerHTML = results[1][index].selectedAnswer;
+        rq.children[1].innerHTML = results[1][index].outcome;
+
+        if(results[1][index].outcome === "Correct"){
+            rq.children[1].style.color = "green";
+        }else if(results[1][index].outcome === "Incorrect"){
+            rq.children[1].style.color = "var(--error-color)";
+        }
+    })
 }
 
