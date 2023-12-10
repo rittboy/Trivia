@@ -126,4 +126,63 @@ const isValid = (usernameInputValue) =>{
         }
     }
 }
+//callback function to sanitize and validate input of username field
+const checkUsernameValidity = () =>{
+    const sanitizedInput = DOMPurify.sanitize(usernameInput.value);
+    const trimmedInput = validator.trim(sanitizedInput);
+    const escapedInput = validator.escape(trimmedInput);
 
+    const validation = isValid(escapedInput);
+    const usernameNotTaken = userExists(escapedInput);
+
+    if(!validation.valid || usernameNotTaken){
+        setStartGameInvalidState();
+
+        if(usernameNotTaken){
+            validationMsg.innerHTML = "Username already in use";
+        }else {
+            validationMsg.innerHTML = validation.msg;
+        }
+    }else{
+        currentUser = escapedInput;
+        setStartGameValidState();
+    }
+}
+
+//toggles selected indicator on answer buttons
+const toggleSelectedIndicator = (e) =>{
+    userSelection = true;
+
+    if(e.target.id.includes("answer-selection")){
+        const childrenArray = Array.from(e.target.parentElement.children);
+        childrenArray.forEach((answerBtn) =>{
+            answerBtn.children[0].style.border = "2px solid #fff";
+            answerBtn.children[0].style.boxShadow = "none";
+        })
+
+        e.target.children[0].style.border = "none";
+        e.target.children[0].style["box-shadow"] = "var(--blue-neon-box)";
+        selectedAnswer = e.target.children[1].innerText;
+
+        if(userSelection){
+            e.target.parentElement.nextElementSibling.removeAttribute("disabled");
+        }
+    }else if(e.target.id.includes("-indicator") || e.target.id.includes("__text")){
+        const childrenArray = Array.from(e.target.parentElement.parentElement.children);
+        childrenArray.forEach((answerBtn) =>{
+            answerBtn.children[0].style.border = "2px solid #fff";
+            answerBtn.children[0].style.boxShadow = "none";
+        })
+
+        if(e.target.id.includes("-indicator")){
+            e.target.style.border = "none";
+            e.target.style["box-shadow"] = "var(--blue-neon-box)";
+
+            selectedAnswer = e.target.nextElementSibling.innerText;
+        }else{
+            e.target.previousElementSibling.style.border = "none";
+            e.target.previousElementSibling.style["box-shadow"] = "var(--blue-neon-box)";
+            selectedAnswer = e.target.innerText;
+        }
+    }
+}
