@@ -42,4 +42,35 @@ let runningScore = 0;
 const lastSectionIndex = sections.length - 1;
 let displayedSectionIndex = 0;
 let sectionOffset;
+//necessary variables to display questions and set selected answer
+let nextQuestionNumber = displayedSectionIndex + 1;
+let currentQuestion;
+let selectedAnswer;
+let correctAnswer;
+let userSelection = false;
+
+//map to store detailed results
+const currentUserDetailedResults = new Map();
+currentUserDetailedResults.set("results", []);
+//map to store users stats
+const usersStats = new Map();
+usersStats.set("stats", []);
+//adds usernames entered to gameUsers Set and full fake user objects to userStats Map
+for(const user of usersValuesArray){
+    gameUsers.add(user.username);
+    usersStats.entries().next().value[1].push(user);
+}
+//adds 10 randomm questions from JSON file to question array
+while(randomTen.size < 10){
+    const randomIndex = Math.floor(Math.random() * questionsKeysArray.length);
+    const randomObjectKey = questionsKeysArray[randomIndex];
+    if(randomTen.has(questions[randomObjectKey])) {
+        continue;
+    }else{
+        randomTen.add(questions[randomObjectKey]);
+    }
+}
+//accesses set's values
+const randomQuestionSet = randomTen.values();
+
 
