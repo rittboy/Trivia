@@ -73,4 +73,30 @@ while(randomTen.size < 10){
 //accesses set's values
 const randomQuestionSet = randomTen.values();
 
-
+//if DOM's readystate is complete, move all question sections out of view
+document.onreadystatechange = (e) =>{
+    if(document.readyState === "complete"){
+        sections.forEach((section, index) =>{
+            section.style.transform = `translateX(${index * 100} %)`;
+        })
+    }
+}
+//handles valid & invalid state at game start
+const setStartGameInvalidState = () =>{
+    usernameInput.style.border = "2px solid rgb(211, 70, 70)";
+    validationMsg.style.display = "block";
+    startBtn.setAttribute("disabled", "");
+}
+const setStartGameValidState = () =>{
+    usernameInput.style.border = "2px solid black";
+    validationMsg.style.display = "none";
+    startBtn.removeAttribute("disabled");
+}
+//helper function to check if username already exists
+const userExists = (username) =>{
+    if(gameUsers.has(username)){
+        return true;
+    }else{
+        return false;
+    }
+}
