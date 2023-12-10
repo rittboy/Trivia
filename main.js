@@ -186,3 +186,75 @@ const toggleSelectedIndicator = (e) =>{
         }
     }
 }
+
+//checks whether given answer is correct and updates users score
+const checkAnswer = (question, userAnswer, correct) =>{
+    const results = currentUserDetailedResults.entries().next().value;
+
+    if(results[1].length < 10){
+        if(userAnswer === correct){
+            results[1].push({
+                question,
+                selectedAnswer,
+                outcome: "Correct"
+            })
+
+            runningScore += 100;
+        }else{
+            results[1].push({
+                question,
+                selectedAnswer,
+                outcome: "Incorrect"
+            })
+        }
+    }
+}
+//handles gameend logic
+const gameEnd = () =>{
+    const score = runningScore.toString();
+    const results = currentUserDetailedResults.entries().next().value;
+    const stats = usersStats.entries().next().value;
+
+    finalScoreSpan.innerHTML = score;
+    stats[1].push({
+        username: currentUser, 
+        score: runningScore
+    })
+
+    const sortedStats = stats[1].sort((a,b) => (a.score < b.score) ? 1 : -1);
+
+    resultsStats.forEach((rs, index) =>{
+        rs.children[0].innerHTML = sortedStats[index].username;
+        rs.children[1].innerHTML = sortedStats[index].score.toString();
+    })
+
+    resultsQuestions.forEach((rq, index) =>{
+        rq.children[1].style["font-family"] = "var(--accent-font)";
+        rq.children[0].children[0].innerHTML = results[1][index].question;
+        rq.children[0].children[1].children[0].innerHTML = results[1][index].selectedAnswer;
+        rq.children[1].innerHTML = results[1][index].outcome;
+
+        if(results[1][index].outcome === "Correct"){
+            rq.children[1].style.color = "green";
+        }else if(results[1][index].outcome === "Incorrect"){
+            rq.children[1].style.color = "var(--error-color)";
+        }
+    })
+}
+
+//displays questions and answer set from randomTen set
+const loadQuestionsAndAnswers = () =>{
+    if(nextQuestionNumber != lastSectionIndex){
+        currentQuestion = randomQuestionSet.next().value;
+        correctAnswer = currentQuestion.correctAnswer;
+        sections[nextQuestionNumber].children[0].innerHTML = currentQuestion["question"];
+
+        const answerNodes = Array.from(sections[nextQuestionNumber].children[1].children);
+
+        answerNodes.forEach((node, index) => node.children[1].innerHTML = currentQuestion["answers"][index]);
+
+        setTimeout(() =>{
+            container.style.background = "rgba(11, 70, 96, 0.75"
+        }, 350)
+    }
+}
