@@ -100,3 +100,30 @@ const userExists = (username) =>{
         return false;
     }
 }
+//checks validity of usernameInput using Validator.js package
+const isValid = (usernameInputValue) =>{
+    if(validator.isEmpty(usernameInputValue) && validator.isLength(usernameInputValue, { min: 5})){
+        return{
+            valid: true,
+            msg: null,
+        }
+    }else{
+        if(validator.isEmpty(usernameInputValue)){
+            return{
+                valid: false,
+                msg: "Required"
+            }
+        }else if(!validator.isLength(usernameInputValue, { min: 5})){
+            return{
+                valid: false,
+                msg: "Minimum 5 characters"
+            }
+        }else{
+            return{
+                valid: false,
+                msg: "Input invalid"
+            }
+        }
+    }
+}
+
